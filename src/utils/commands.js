@@ -1,6 +1,8 @@
 import { commandsList, errors } from "../constants.js";
+
 import { up } from "../operations/navigation/up.js";
 import { ls } from "../operations/navigation/ls.js";
+import { cd } from "../operations/navigation/cd.js";
 
 export const checkCommand = (command) => {
   try {
@@ -17,6 +19,14 @@ export const checkCommand = (command) => {
         break;
       case "ls":
         ls();
+        break;
+      case "cd":
+        if (commandSplit.length === 2) {
+          cd(commandSplit[1]);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
       default:
         break;
     }
