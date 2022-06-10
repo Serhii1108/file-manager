@@ -1,3 +1,4 @@
+import { HOME_DIR } from "./constants.js";
 import { getUserName } from "./utils/user.js";
 
 const input = process.stdin;
@@ -7,6 +8,8 @@ const username = getUserName();
 
 const startFileManager = () => {
   output.write(`Welcome to the File Manager, ${username}!\n`);
+  output.write(`\nYou are currently in ${HOME_DIR}\n`);
+  output.write("\nYou can enter a command\n\n");
 
   input.on("data", (data) => {
     const userInput = data.toString();
