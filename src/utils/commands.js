@@ -1,6 +1,6 @@
-import { showCurrDir } from "./dir.js";
 import { commandsList, errors } from "../constants.js";
 import { up } from "../operations/navigation/up.js";
+import { ls } from "../operations/navigation/ls.js";
 
 export const checkCommand = (command) => {
   try {
@@ -13,8 +13,10 @@ export const checkCommand = (command) => {
 
     switch (baseCommand) {
       case "up":
-        up().then(showCurrDir());
+        up();
         break;
+      case "ls":
+        ls();
       default:
         break;
     }
