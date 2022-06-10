@@ -1,3 +1,5 @@
 import { HOME_DIR } from "./constants.js";
 
-export let currDir = HOME_DIR;
+export const state = {
+  currDir: HOME_DIR,
+};
