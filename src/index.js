@@ -1,4 +1,5 @@
-import { HOME_DIR } from "./constants.js";
+import { errors, HOME_DIR } from "./constants.js";
+import { checkCommand } from "./utils/commands.js";
 import { getUserName } from "./utils/user.js";
 
 const input = process.stdin;
@@ -15,6 +16,8 @@ const startFileManager = () => {
     const userInput = data.toString();
     if (userInput.includes(".exit")) {
       finishFileManager();
+    } else {
+      checkCommand(userInput);
     }
   });
 
