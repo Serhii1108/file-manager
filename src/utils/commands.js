@@ -4,6 +4,7 @@ import { up } from "../operations/navigation/up.js";
 import { ls } from "../operations/navigation/ls.js";
 import { cd } from "../operations/navigation/cd.js";
 import { cat } from "../operations/files/cat.js";
+import { add } from "../operations/files/add.js";
 
 export const checkCommand = (command) => {
   try {
@@ -17,7 +18,7 @@ export const checkCommand = (command) => {
 
     const isCommandWithOneArg = commandSplit.length === 2;
 
-    const userPath = isCommandWithOneArg
+    const userFirstArg = isCommandWithOneArg
       ? commandSplit[1].replace(/^["'](.+(?=["']$))["']$/, "$1")
       : "";
 
@@ -30,14 +31,21 @@ export const checkCommand = (command) => {
         break;
       case "cd":
         if (isCommandWithOneArg) {
-          cd(userPath);
+          cd(userFirstArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
       case "cat":
         if (isCommandWithOneArg) {
-          cat(userPath);
+          cat(userFirstArg);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
+      case "add":
+        if (isCommandWithOneArg) {
+          add(userFirstArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
