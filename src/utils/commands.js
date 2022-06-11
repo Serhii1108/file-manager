@@ -5,6 +5,7 @@ import { ls } from "../operations/navigation/ls.js";
 import { cd } from "../operations/navigation/cd.js";
 import { cat } from "../operations/files/cat.js";
 import { add } from "../operations/files/add.js";
+import { rm } from "../operations/files/rm.js";
 
 export const checkCommand = (command) => {
   try {
@@ -46,6 +47,13 @@ export const checkCommand = (command) => {
       case "add":
         if (isCommandWithOneArg) {
           add(userFirstArg);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
+      case "rm":
+        if (isCommandWithOneArg) {
+          rm(userFirstArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }

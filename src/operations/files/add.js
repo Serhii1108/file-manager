@@ -7,12 +7,14 @@ import { state } from "../../state.js";
 export const add = async (fileName) => {
   try {
     const pathToFile = path.join(state.currDir, fileName);
-    console.log(pathToFile);
+
     if (existsSync(pathToFile)) {
       throw new Error();
     }
 
-    await appendFile(pathToFile, "");
+    await appendFile(pathToFile, "").then(() => {
+      process.stdout.write("File created successfully!\n");
+    });
   } catch {
     console.error(`\n${errors.FAIL}\n`);
   }
