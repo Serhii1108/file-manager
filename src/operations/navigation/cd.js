@@ -1,23 +1,26 @@
-import path from "path";
 import { existsSync } from "fs";
 
 import { state } from "../../state.js";
-import { showCurrDir } from "../../utils/dir.js";
-import { HOME_DIR } from "../../constants.js";
+import { isSubDirectory, showCurrDir } from "../../utils/dir.js";
+import { errors, HOME_DIR } from "../../constants.js";
+import { getUserPath } from "../../utils/user.js";
 
 export const cd = async (newPath) => {
   try {
-    const userPath = path.join(state.currDir, newPath);
+    const userPath = getUserPath(newPath);
+
     if (!existsSync(userPath)) {
       throw new Error();
-    } else if (state.currDir === HOME_DIR && newPath.startsWith("..")) {
+    } else if (!isSubDirectory(userPath)) {
+      // tip: user cannot go above his HOME_DIR
+      state.currDir = HOME_DIR;
       showCurrDir();
       return;
     }
 
     state.currDir = userPath;
     showCurrDir();
-  } catch (error) {
-    console.log(error);
+  } catch {
+    console.log(`\n${errors.FAIL}\n`);
   }
 };

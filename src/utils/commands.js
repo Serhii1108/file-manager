@@ -6,7 +6,9 @@ import { cd } from "../operations/navigation/cd.js";
 
 export const checkCommand = (command) => {
   try {
-    const commandSplit = command.trim().split(" ");
+    const regExp = /(?:[^\s"']+|['"][^'"]*["'])+/g;
+
+    const commandSplit = command.match(regExp);
     const baseCommand = commandSplit[0].toLowerCase();
 
     if (!commandsList.includes(baseCommand)) {
@@ -22,7 +24,11 @@ export const checkCommand = (command) => {
         break;
       case "cd":
         if (commandSplit.length === 2) {
-          cd(commandSplit[1]);
+          const userPath = commandSplit[1].replace(
+            /^["'](.+(?=["']$))["']$/,
+            "$1"
+          );
+          cd(userPath);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
