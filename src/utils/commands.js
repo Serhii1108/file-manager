@@ -6,21 +6,29 @@ import { cd } from "../operations/navigation/cd.js";
 import { cat } from "../operations/files/cat.js";
 import { add } from "../operations/files/add.js";
 import { rm } from "../operations/files/rm.js";
+import { rn } from "../operations/files/rn.js";
+
+const splitRegExp = /(?:[^\s"']+|['"][^'"]*["'])+/g;
+const removeQuotesRegExp = /^["'](.+(?=["']$))["']$/;
 
 export const checkCommand = (command) => {
   try {
-    const regExp = /(?:[^\s"']+|['"][^'"]*["'])+/g;
-
-    const commandSplit = command.match(regExp);
+    const commandSplit = command.match(splitRegExp);
     const baseCommand = commandSplit[0].toLowerCase();
     if (!commandsList.includes(baseCommand)) {
       throw new Error(errors.INVALID);
     }
 
     const isCommandWithOneArg = commandSplit.length === 2;
+    const isCommandWithTwoArg = commandSplit.length === 3;
 
-    const userFirstArg = isCommandWithOneArg
-      ? commandSplit[1].replace(/^["'](.+(?=["']$))["']$/, "$1")
+    const userFirstArg =
+      isCommandWithOneArg || isCommandWithTwoArg
+        ? commandSplit[1].replace(removeQuotesRegExp, "$1")
+        : "";
+
+    const userSecondArg = isCommandWithTwoArg
+      ? commandSplit[2].replace(removeQuotesRegExp, "$1")
       : "";
 
     switch (baseCommand) {
@@ -54,6 +62,13 @@ export const checkCommand = (command) => {
       case "rm":
         if (isCommandWithOneArg) {
           rm(userFirstArg);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
+      case "rn":
+        if (isCommandWithTwoArg) {
+          rn(userFirstArg, userSecondArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
