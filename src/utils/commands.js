@@ -3,6 +3,7 @@ import { commandsList, errors } from "../constants.js";
 import { up } from "../operations/navigation/up.js";
 import { ls } from "../operations/navigation/ls.js";
 import { cd } from "../operations/navigation/cd.js";
+import { cat } from "../operations/files/cat.js";
 
 export const checkCommand = (command) => {
   try {
@@ -10,10 +11,15 @@ export const checkCommand = (command) => {
 
     const commandSplit = command.match(regExp);
     const baseCommand = commandSplit[0].toLowerCase();
-
     if (!commandsList.includes(baseCommand)) {
       throw new Error(errors.INVALID);
     }
+
+    const isCommandWithOneArg = commandSplit.length === 2;
+
+    const userPath = isCommandWithOneArg
+      ? commandSplit[1].replace(/^["'](.+(?=["']$))["']$/, "$1")
+      : "";
 
     switch (baseCommand) {
       case "up":
@@ -23,12 +29,15 @@ export const checkCommand = (command) => {
         ls();
         break;
       case "cd":
-        if (commandSplit.length === 2) {
-          const userPath = commandSplit[1].replace(
-            /^["'](.+(?=["']$))["']$/,
-            "$1"
-          );
+        if (isCommandWithOneArg) {
           cd(userPath);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
+      case "cat":
+        if (isCommandWithOneArg) {
+          cat(userPath);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
