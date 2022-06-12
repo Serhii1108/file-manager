@@ -9,6 +9,7 @@ import { rm } from "../operations/files/rm.js";
 import { rn } from "../operations/files/rn.js";
 import { cp } from "../operations/files/cp.js";
 import { mv } from "../operations/files/mv.js";
+import { getOsInfo } from "../operations/os/os.js";
 
 const splitRegExp = /(?:[^\s"']+|['"][^'"]*["'])+/g;
 const removeQuotesRegExp = /^["'](.+(?=["']$))["']$/;
@@ -34,6 +35,7 @@ export const checkCommand = (command) => {
       : "";
 
     switch (baseCommand) {
+      // navigation
       case "up":
         up();
         break;
@@ -47,6 +49,8 @@ export const checkCommand = (command) => {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
+
+      // operation with files
       case "cat":
         if (isCommandWithOneArg) {
           cat(userFirstArg);
@@ -85,6 +89,15 @@ export const checkCommand = (command) => {
       case "mv":
         if (isCommandWithTwoArg) {
           mv(userFirstArg, userSecondArg);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
+
+      // print os information
+      case "os":
+        if (isCommandWithOneArg) {
+          getOsInfo(userFirstArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
