@@ -16,6 +16,7 @@ export const commandsList = [
   "hash",
   "compress",
   "decompress",
+  "clear",
 ];
 
 export const errors = {

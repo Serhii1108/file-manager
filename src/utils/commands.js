@@ -13,6 +13,7 @@ import { getOsInfo } from "../operations/os/os.js";
 import { getFileHash } from "../operations/hash/hash.js";
 import { compressFile } from "../operations/archives/compress.js";
 import { decompressFile } from "../operations/archives/decompress.js";
+import { clear } from "../operations/clear.js";
 
 const splitRegExp = /(?:[^\s"']+|['"][^'"]*["'])+/g;
 const removeQuotesRegExp = /^["'](.+(?=["']$))["']$/;
@@ -21,6 +22,7 @@ export const checkCommand = (command) => {
   try {
     const commandSplit = command.match(splitRegExp);
     const baseCommand = commandSplit[0].toLowerCase();
+
     if (!commandsList.includes(baseCommand)) {
       throw new Error(errors.INVALID);
     }
@@ -42,9 +44,11 @@ export const checkCommand = (command) => {
       case "up":
         up();
         break;
+
       case "ls":
         ls();
         break;
+
       case "cd":
         if (isCommandWithOneArg) {
           cd(userFirstArg);
@@ -61,6 +65,7 @@ export const checkCommand = (command) => {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
+
       case "add":
         if (isCommandWithOneArg) {
           add(userFirstArg);
@@ -68,6 +73,7 @@ export const checkCommand = (command) => {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
+
       case "rm":
         if (isCommandWithOneArg) {
           rm(userFirstArg);
@@ -75,6 +81,7 @@ export const checkCommand = (command) => {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
+
       case "rn":
         if (isCommandWithTwoArg) {
           rn(userFirstArg, userSecondArg);
@@ -82,6 +89,7 @@ export const checkCommand = (command) => {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
+
       case "cp":
         if (isCommandWithTwoArg) {
           cp(userFirstArg, userSecondArg);
@@ -89,6 +97,7 @@ export const checkCommand = (command) => {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
+
       case "mv":
         if (isCommandWithTwoArg) {
           mv(userFirstArg, userSecondArg);
@@ -123,12 +132,16 @@ export const checkCommand = (command) => {
           console.error(`\n${errors.INVALID}\n`);
         }
         break;
+
       case "decompress":
         if (isCommandWithTwoArg) {
           decompressFile(userFirstArg, userSecondArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
+        break;
+      case "clear":
+        clear();
         break;
       default:
         break;
