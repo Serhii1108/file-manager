@@ -7,6 +7,7 @@ import { cat } from "../operations/files/cat.js";
 import { add } from "../operations/files/add.js";
 import { rm } from "../operations/files/rm.js";
 import { rn } from "../operations/files/rn.js";
+import { cp } from "../operations/files/cp.js";
 
 const splitRegExp = /(?:[^\s"']+|['"][^'"]*["'])+/g;
 const removeQuotesRegExp = /^["'](.+(?=["']$))["']$/;
@@ -69,6 +70,13 @@ export const checkCommand = (command) => {
       case "rn":
         if (isCommandWithTwoArg) {
           rn(userFirstArg, userSecondArg);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
+      case "cp":
+        if (isCommandWithTwoArg) {
+          cp(userFirstArg, userSecondArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
