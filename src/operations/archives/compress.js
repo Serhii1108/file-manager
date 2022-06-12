@@ -9,7 +9,7 @@ import { errors } from "../../constants.js";
 
 export const compressFile = async (userPathSrc, userPathDist) => {
   try {
-    const fileName = path.basename(userPathSrc);
+    const fileName = path.win32.basename(userPathSrc);
     const src = getUserPath(userPathSrc);
     const dist = getUserPath(path.join(userPathDist, fileName + ".br"));
 

@@ -13,7 +13,9 @@ export const getFileHash = async (userPath) => {
       const hash = createHash("sha256").update(fileBuffer);
       const hex = hash.digest("hex");
 
-      console.log(`\nHash for file "${path.basename(pathToFile)}": ${hex}\n`);
+      console.log(
+        `\nHash for file "${path.win32.basename(pathToFile)}": ${hex}\n`
+      );
     });
   } catch {
     console.error(`\n${errors.FAIL}\n`);
