@@ -1,6 +1,7 @@
 import { existsSync, createReadStream } from "fs";
 
 import { errors } from "../../constants.js";
+import { showCurrDir } from "../../utils/dir.js";
 import { getUserPath } from "../../utils/user.js";
 
 export const cat = (userPath) => {
@@ -15,6 +16,7 @@ export const cat = (userPath) => {
 
     readStream.on("data", (data) => {
       process.stdout.write(`${data}\n`);
+      showCurrDir();
     });
 
     readStream.on("error", () => {

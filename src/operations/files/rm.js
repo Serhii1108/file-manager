@@ -1,6 +1,7 @@
 import { existsSync } from "fs";
 import { rm as removeFile } from "fs/promises";
 import { errors } from "../../constants.js";
+import { showCurrDir } from "../../utils/dir.js";
 
 import { getUserPath } from "../../utils/user.js";
 
@@ -13,7 +14,8 @@ export const rm = async (userPath) => {
     }
 
     await removeFile(pathToFile).then(() => {
-      process.stdout.write("File deleted successfully!\n");
+      process.stdout.write("\nFile deleted successfully!\n");
+      showCurrDir();
     });
   } catch {
     console.error(`\n${errors.FAIL}\n`);

@@ -4,6 +4,7 @@ import { copyFile } from "fs/promises";
 
 import { getUserPath } from "../../utils/user.js";
 import { errors } from "../../constants.js";
+import { showCurrDir } from "../../utils/dir.js";
 
 export const cp = async (userPathSrc, userPathDist) => {
   try {
@@ -16,6 +17,7 @@ export const cp = async (userPathSrc, userPathDist) => {
     }
     await copyFile(src, dist).then(() => {
       process.stdout.write("\nFile copied successfully!\n");
+      showCurrDir();
     });
   } catch {
     console.error(`\n${errors.FAIL}\n`);

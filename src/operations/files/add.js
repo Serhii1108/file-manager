@@ -3,6 +3,7 @@ import { existsSync } from "fs";
 import { appendFile } from "fs/promises";
 
 import { state } from "../../state.js";
+import { showCurrDir } from "../../utils/dir.js";
 
 export const add = async (fileName) => {
   try {
@@ -13,7 +14,8 @@ export const add = async (fileName) => {
     }
 
     await appendFile(pathToFile, "").then(() => {
-      process.stdout.write("File created successfully!\n");
+      process.stdout.write("\nFile created successfully!\n");
+      showCurrDir();
     });
   } catch {
     console.error(`\n${errors.FAIL}\n`);

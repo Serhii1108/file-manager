@@ -3,6 +3,7 @@ import { existsSync } from "fs";
 import { rename } from "fs/promises";
 
 import { getUserPath } from "../../utils/user.js";
+import { showCurrDir } from "../../utils/dir.js";
 
 export const rn = async (userPath, newFileName) => {
   try {
@@ -14,8 +15,9 @@ export const rn = async (userPath, newFileName) => {
     }
 
     await rename(pathToOldFile, pathToNewFile).then(() => {
-      process.stdout.write("File name changed successfully!\n");
+      process.stdout.write("\nFile name changed successfully!\n");
       process.stdout.write(`New name: ${newFileName}\n`);
+      showCurrDir();
     });
   } catch {
     console.error(`\n${errors.FAIL}\n`);
