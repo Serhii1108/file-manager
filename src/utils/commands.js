@@ -12,6 +12,7 @@ import { mv } from "../operations/files/mv.js";
 import { getOsInfo } from "../operations/os/os.js";
 import { getFileHash } from "../operations/hash/hash.js";
 import { compressFile } from "../operations/archives/compress.js";
+import { decompressFile } from "../operations/archives/decompress.js";
 
 const splitRegExp = /(?:[^\s"']+|['"][^'"]*["'])+/g;
 const removeQuotesRegExp = /^["'](.+(?=["']$))["']$/;
@@ -118,6 +119,13 @@ export const checkCommand = (command) => {
       case "compress":
         if (isCommandWithTwoArg) {
           compressFile(userFirstArg, userSecondArg);
+        } else {
+          console.error(`\n${errors.INVALID}\n`);
+        }
+        break;
+      case "decompress":
+        if (isCommandWithTwoArg) {
+          decompressFile(userFirstArg, userSecondArg);
         } else {
           console.error(`\n${errors.INVALID}\n`);
         }
